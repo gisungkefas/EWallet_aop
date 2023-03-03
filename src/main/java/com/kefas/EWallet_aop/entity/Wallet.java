@@ -2,10 +2,7 @@ package com.kefas.EWallet_aop.entity;
 
 import com.amazonaws.services.simpleemail.model.VerificationStatus;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -20,6 +17,7 @@ import java.math.BigDecimal;
 @Builder
 @Document("wallets")
 @AllArgsConstructor
+@NoArgsConstructor
 public class Wallet extends Base{
 
     @Indexed(unique = true)
@@ -47,8 +45,4 @@ public class Wallet extends Base{
     private VerificationStatus verificationStatus;
 
     private String customer_code;
-
-    public Wallet(){
-        super();
-    }
 }
