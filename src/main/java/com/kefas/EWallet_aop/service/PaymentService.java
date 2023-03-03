@@ -1,5 +1,12 @@
 package com.kefas.EWallet_aop.service;
 
+import com.kefas.EWallet_aop.pojo.paystack.request.AccountRequest;
+import com.kefas.EWallet_aop.pojo.paystack.request.CreateCustomerRequest;
+import com.kefas.EWallet_aop.pojo.paystack.request.SetUpTransactionRequest;
+import com.kefas.EWallet_aop.pojo.paystack.request.TransferRequest;
+import com.kefas.EWallet_aop.pojo.paystack.response.*;
+import com.kefas.EWallet_aop.pojo.wallet.request.WalletValidationRequest;
+
 import java.security.Principal;
 
 public interface PaymentService {

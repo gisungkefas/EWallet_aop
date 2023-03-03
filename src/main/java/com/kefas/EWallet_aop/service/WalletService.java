@@ -1,5 +1,11 @@
 package com.kefas.EWallet_aop.service;
 
+import com.kefas.EWallet_aop.pojo.wallet.request.InitiateTransferFromSikabethToWalletRequest;
+import com.kefas.EWallet_aop.pojo.wallet.request.PinResetRequest;
+import com.kefas.EWallet_aop.pojo.wallet.request.SikabethWalletResponse;
+import com.kefas.EWallet_aop.pojo.wallet.request.WalletValidationRequest;
+import com.kefas.EWallet_aop.pojo.wallet.response.WalletResponse;
+
 import java.math.BigDecimal;
 import java.security.Principal;
 import java.util.List;
