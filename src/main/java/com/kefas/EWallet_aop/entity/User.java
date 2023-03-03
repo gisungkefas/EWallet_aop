@@ -1,6 +1,7 @@
 package com.kefas.EWallet_aop.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.kefas.EWallet_aop.enums.Status;
 import lombok.*;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -20,7 +21,7 @@ import java.util.Date;
 public class User extends Base{
 
     @Indexed(unique = true)
-    private String userId;
+    private String uuid;
 
     @Column(nullable = false, length = 50)
     private String firstName;
