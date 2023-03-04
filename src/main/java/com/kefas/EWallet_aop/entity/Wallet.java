@@ -25,6 +25,8 @@ public class Wallet extends Base{
 
     private String userUuid;
 
+    private boolean isAccountActive;
+
     private String email;
 
     @Indexed(unique = true)
@@ -45,4 +47,10 @@ public class Wallet extends Base{
     private VerificationStatus verificationStatus;
 
     private String customer_code;
+
+    private boolean isBlacklisted;
+
+    public Wallet(){
+        super();
+    }
 }
