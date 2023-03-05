@@ -1,5 +1,6 @@
 package com.kefas.EWallet_aop.util;
 
+import com.kefas.EWallet_aop.annotation.TokenLog;
 import com.kefas.EWallet_aop.entity.User;
 import com.kefas.EWallet_aop.exception.UserNotFoundException;
 import com.kefas.EWallet_aop.exception.ValidationException;
@@ -32,6 +33,7 @@ public class AuthDetails {
         }
     }
 
+    @TokenLog
     public User validateActiveUser(Principal principal) {
         User user = getAuthorizedUser(principal);
 
