@@ -14,5 +14,5 @@ public interface TransactionRepository extends MongoRepository<Transaction, Stri
 
     Page<Transaction> findByUserUuid(String userUuid, Pageable pageable);
 
-    Page<Transaction> findByUserUuidAndTransactionType(String userUuid, TransactionType transactionType);
+    Page<Transaction> findByUserUuidAndTransactionType(String userUuid, TransactionType transactionType, Pageable pageable);
 }
