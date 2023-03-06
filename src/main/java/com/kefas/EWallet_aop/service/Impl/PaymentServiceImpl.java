@@ -1,19 +1,45 @@
 package com.kefas.EWallet_aop.service.Impl;
 
+import com.kefas.EWallet_aop.entity.User;
+import com.kefas.EWallet_aop.entity.Wallet;
+import com.kefas.EWallet_aop.exception.WalletException;
 import com.kefas.EWallet_aop.pojo.paystack.request.AccountRequest;
 import com.kefas.EWallet_aop.pojo.paystack.request.CreateCustomerRequest;
 import com.kefas.EWallet_aop.pojo.paystack.request.SetUpTransactionRequest;
 import com.kefas.EWallet_aop.pojo.paystack.request.TransferRequest;
 import com.kefas.EWallet_aop.pojo.paystack.response.*;
 import com.kefas.EWallet_aop.pojo.wallet.request.WalletValidationRequest;
+import com.kefas.EWallet_aop.repository.WalletRepository;
 import com.kefas.EWallet_aop.service.PaymentService;
+import com.kefas.EWallet_aop.util.AppUtil;
+import com.kefas.EWallet_aop.util.AuthDetails;
+import com.kefas.EWallet_aop.util.LocalStorage;
+import com.kefas.EWallet_aop.util.PayStackHttpEntity;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import java.security.Principal;
 
+@Service
+@RequiredArgsConstructor
 public class PaymentServiceImpl implements PaymentService {
+    @Value(value = "UserEmailTransferRecipient")
+    private String TRANSFER_RECIPIENT;
+    private final PayStackHttpEntity payStackHttpEntity;
+    private final RestTemplate restTemplate;
+    private AppUtil util;
+    private final AuthDetails authDetails;
+    private final LocalStorage localStorage;
+    private final WalletRepository walletRepository;
+    private final WalletChecker walletChecker;
+    private final PasswordEncoder encoder;
     @Override
     public SetUpTransactionResponse initializeTransaction(Principal principal, SetUpTransactionRequest request) {
-        return null;
+        checksBeforeTransaction(principal);
+        return initializeTransaction(request);
     }
 
     @Override
@@ -74,5 +100,13 @@ public class PaymentServiceImpl implements PaymentService {
     @Override
     public CustomerValidationResponse validateCustomer(WalletValidationRequest request) {
         return null;
+    }
+
+    public User checksBeforeTransaction(Principal principal){
+        User user = authDetails.validateActiveUser(principal);
+        Wallet wallet = walletRepository.findByWalletId(user.getWalletId())
+                .orElseThrow(() -> new WalletException("Wallet does not exist."));
+        walletChecker.checkBeforeTransaction(wallet, encoder);
+        return user;
     }
 }
